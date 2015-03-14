@@ -8,3 +8,7 @@
  Version:      1.0.0
  Text Domain:  twenty-fifteen-child
 */
+
+ul.gigpress-listing {
+	list-style-type: none;
+}
