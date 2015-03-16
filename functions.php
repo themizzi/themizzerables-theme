@@ -1,6 +1,10 @@
 <?php
 
-add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
+/**
+ * Enqueue parent styles.
+ *
+ * @since 1.0
+ */
 function theme_enqueue_styles() {
     wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
     wp_enqueue_style( 'child-style',
@@ -8,13 +12,12 @@ function theme_enqueue_styles() {
         array('parent-style')
     );
 }
+add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
 
 /**
- * Register widget area.
+ * Register widget areas.
  * 
- * @since Twenty Fifteen 1.0
- *
- * @link https://codex.wordpress.org/Function_Reference/register_sidebar
+ * @since 1.0
  */
 function themizzerables_widgets_init() {
     unregister_sidebar( 'sidebar-1' );
