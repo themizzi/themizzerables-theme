@@ -6,11 +6,20 @@
  * @since 1.0
  */
 function themizzerables_enqueue_styles() {
+    global $wp_customize;
     wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
     wp_enqueue_style( 'child-style',
         get_stylesheet_directory_uri() . '/style.css',
-        array('parent-style')
+        array( 'parent-style' )
     );
+    if ( (! is_admin() || isset( $wp_customize ) ) &&
+        ( true == is_category() && false == get_theme_mod( 'show_category_archive_headers', false ) ) ||
+        ( 'page' == get_post_type() && false == get_theme_mod( 'show_page_headers', false ) )
+    ) {
+        wp_enqueue_style( 'themizzerables-headers',
+            get_stylesheet_directory_uri() . '/headers.css',
+            array( 'child-style' ) );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'themizzerables_enqueue_styles' );
 
@@ -62,12 +71,14 @@ function themizzerables_customize_register( $wp_customize ) {
     ) );
     $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'show_category_archive_headers', array(
         'label'     => __( 'Show Category Archive Headers' ),
+        'description'   => __( 'Will still show on small screens.' ),
         'type'      => 'checkbox',
         'section'   => 'themizzerables_headers',
         'settings'  => 'show_category_archive_headers'
     ) ) );
     $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'show_page_headers', array(
         'label'     => __( 'Show Page Headers' ),
+        'description'   => __( 'Will still show on small screens.' ),
         'type'      => 'checkbox',
         'section'   => 'themizzerables_headers',
         'settings'  => 'show_page_headers'

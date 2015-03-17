@@ -1,0 +1,13 @@
+@media screen and (min-width: 59.6875em) {
+    .page-header {
+        display: none;
+    }
+
+    .page-header + .hentry:first-of-type {
+        margin-top: 0;
+    }
+
+    .entry-title {
+        display: none;
+    }
+}
