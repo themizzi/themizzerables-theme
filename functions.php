@@ -109,7 +109,7 @@ add_action( 'customize_register', 'themizzerables_customize_register' );
  * @return  string
  */
 function filter_category_archive_titles( $title ) {
-    if ( get_theme_mod( 'filter_category_archive_titles', true ) && 0 === strpos( 'Category: ', $title ) ) {
+    if ( get_theme_mod( 'filter_category_archive_titles', true ) && 0 === strpos( $title, 'Category: ' ) ) {
         $title = substr( $title, 10);
     }
     return $title   ;
