@@ -85,3 +85,11 @@ function themizzerables_customize_register( $wp_customize ) {
     ) ) );
 }
 add_action( 'customize_register', 'themizzerables_customize_register' );
+
+function filter_archive_title( $title ) {
+    if ( 0 == strpos( 'Category: ', $title ) ) {
+        $title = substr( $title, 10);
+    }
+    return $title   ;
+}
+add_filter( 'get_the_archive_title', 'filter_archive_title' );
