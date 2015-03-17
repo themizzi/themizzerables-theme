@@ -1,9 +1,14 @@
 <?php
-
+/**
+ * The Mizzerables Theme
+ *
+ * @package themizzerables
+ * @author  Joe Mizzi <themizzi@me.com>
+ */
 /**
  * Enqueue parent styles.
  *
- * @since 1.0
+ * @since   1.0
  */
 function themizzerables_enqueue_styles() {
     global $wp_customize;
@@ -26,7 +31,7 @@ add_action( 'wp_enqueue_scripts', 'themizzerables_enqueue_styles' );
 /**
  * Register widget areas.
  *
- * @since 1.0
+ * @since   1.0
  */
 function themizzerables_widgets_init() {
     unregister_sidebar( 'sidebar-1' );
@@ -56,7 +61,8 @@ add_action( 'widgets_init', 'themizzerables_widgets_init', 11 );
 /**
  * Add customizer settings.
  *
- * @param WP_Customize_Manager $wp_customize customizer object.
+ * @since   1.0
+ * @param   WP_Customize_Manager $wp_customize customizer object.
  */
 function themizzerables_customize_register( $wp_customize ) {
     $wp_customize->add_setting( 'show_category_archive_headers', array(
@@ -95,6 +101,13 @@ function themizzerables_customize_register( $wp_customize ) {
 }
 add_action( 'customize_register', 'themizzerables_customize_register' );
 
+/**
+ * Filter the category title
+ *
+ * @since   1.0
+ * @param   $title
+ * @return  string
+ */
 function filter_category_archive_titles( $title ) {
     if ( get_theme_mod( 'filter_category_archive_titles', true ) && 0 == strpos( 'Category: ', $title ) ) {
         $title = substr( $title, 10);
