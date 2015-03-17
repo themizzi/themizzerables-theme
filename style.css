@@ -9,6 +9,9 @@
  Text Domain:  twenty-fifteen-child
 */
 
-ul.gigpress-listing {
-	list-style-type: none;
+@media all {
+
+    ul.gigpress-listing {
+        list-style-type: none;
+    }
 }
