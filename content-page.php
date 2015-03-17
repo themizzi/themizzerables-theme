@@ -14,9 +14,11 @@
     twentyfifteen_post_thumbnail();
     ?>
 
-    <header class="entry-header" <?php if ( false == get_theme_mod( 'show_page_headers', array() ) ) : ?>style="display: none;" <?php endif; ?>>
-        <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-    </header><!-- .entry-header -->
+    <?php if ( true == get_theme_mod( 'show_page_headers', array() ) ) : ?>
+        <header class="entry-header">
+            <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+        </header><!-- .entry-header -->
+    <?php endif; ?>
 
     <div class="entry-content">
         <?php the_content(); ?>

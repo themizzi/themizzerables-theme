@@ -13,17 +13,6 @@ function themizzerables_enqueue_styles() {
         get_stylesheet_directory_uri() . '/style.css',
         array('parent-style')
     );
-    if ( (! is_admin() || isset( $wp_customize ) ) &&
-         is_archive() &&
-         false == get_theme_mod( 'show_archive_headers', false ) ) {
-        $css = '
-            @media all {
-                .page-header + .hentry:first-of-type {
-                    margin-top: 0;
-                }
-            }';
-        wp_add_inline_style( 'child-style', $css );
-    }
 }
 add_action( 'wp_enqueue_scripts', 'themizzerables_enqueue_styles', 999 );
 
@@ -63,7 +52,7 @@ add_action( 'widgets_init', 'themizzerables_widgets_init', 11 );
  * @param WP_Customize_Manager $wp_customize customizer object.
  */
 function themizzerables_customize_register( $wp_customize ) {
-    $wp_customize->add_setting( 'show_archive_headers', array(
+    $wp_customize->add_setting( 'show_category_archive_headers', array(
         'default'   => false
     ) );
     $wp_customize->add_setting( 'show_page_headers', array(
@@ -73,11 +62,11 @@ function themizzerables_customize_register( $wp_customize ) {
         'title'     => __( 'Headers', 'themizzerables' ),
         'priority'  => 30
     ) );
-    $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'show_archive_headers', array(
-        'label'     => __( 'Show Archive Headers' ),
+    $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'show_category_archive_headers', array(
+        'label'     => __( 'Show Category Archive Headers' ),
         'type'      => 'checkbox',
         'section'   => 'themizzerables_headers',
-        'settings'  => 'show_archive_headers'
+        'settings'  => 'show_category_archive_headers'
     ) ) );
     $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'show_page_headers', array(
         'label'     => __( 'Show Page Headers' ),
