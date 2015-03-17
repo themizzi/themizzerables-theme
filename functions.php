@@ -62,6 +62,9 @@ function themizzerables_customize_register( $wp_customize ) {
     $wp_customize->add_setting( 'show_category_archive_headers', array(
         'default'   => false
     ) );
+    $wp_customize->add_setting( 'filter_category_archive_titles', array(
+        'default'   => true
+    ) );
     $wp_customize->add_setting( 'show_page_headers', array(
         'default'   => false
     ) );
@@ -76,6 +79,12 @@ function themizzerables_customize_register( $wp_customize ) {
         'section'   => 'themizzerables_headers',
         'settings'  => 'show_category_archive_headers'
     ) ) );
+    $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'filter_category_archive_titles', array(
+        'label'     => __( 'Filter Category Archive Titles' ),
+        'type'      => 'checkbox',
+        'section'   => 'themizzerables_headers',
+        'settings'  => 'filter_category_archive_titles'
+    ) ) );
     $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'show_page_headers', array(
         'label'     => __( 'Show Page Headers' ),
         'description'   => __( 'Will still show on small screens.' ),
@@ -86,10 +95,10 @@ function themizzerables_customize_register( $wp_customize ) {
 }
 add_action( 'customize_register', 'themizzerables_customize_register' );
 
-function filter_archive_title( $title ) {
-    if ( 0 == strpos( 'Category: ', $title ) ) {
+function filter_category_archive_titles( $title ) {
+    if ( get_theme_mod( 'filter_category_archive_titles', true ) && 0 == strpos( 'Category: ', $title ) ) {
         $title = substr( $title, 10);
     }
     return $title   ;
 }
-add_filter( 'get_the_archive_title', 'filter_archive_title' );
+add_filter( 'get_the_archive_title', 'filter_category_archive_titles' );
