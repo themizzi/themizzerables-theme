@@ -14,8 +14,8 @@ ul.gigpress-listing {
 
 aside ul.gigpress-listing li {
     border-top: 1px solid {$default_color_rgb};
-    margin-bottom: .25em;
-    padding-top: .25em;
+    margin-bottom: 0.5em;
+    padding-top: 0.5em;
 }
 
 aside ul.gigpress-listing {
