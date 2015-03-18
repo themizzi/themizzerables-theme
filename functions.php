@@ -25,6 +25,11 @@ function themizzerables_enqueue_styles() {
             get_stylesheet_directory_uri() . '/headers.css',
             array( 'child-style' ) );
     }
+    if ( true == get_theme_mod( 'match_gigpress_widget_to_theme', true ) &&
+        is_active_widget( false, false, 'gigpress' ) ) {
+        $css = include plugin_dir_path( __FILE__ ) . 'gigpress.css.php';
+        wp_add_inline_style( 'child-style', $css );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'themizzerables_enqueue_styles' );
 
@@ -74,9 +79,16 @@ function themizzerables_customize_register( $wp_customize ) {
     $wp_customize->add_setting( 'show_page_headers', array(
         'default'   => false
     ) );
+    $wp_customize->add_setting( 'match_gigpress_widget_to_theme', array(
+        'default'   => true
+    ) );
     $wp_customize->add_section( 'themizzerables_headers', array(
         'title'     => __( 'Headers', 'themizzerables' ),
         'priority'  => 30
+    ) );
+    $wp_customize->add_section( 'themizzerables_gigpress', array(
+        'title'     => __( 'GigPress', 'themizzerables' ),
+        'priority'  => 31
     ) );
     $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'show_category_archive_headers', array(
         'label'     => __( 'Show Category Archive Headers' ),
@@ -97,6 +109,12 @@ function themizzerables_customize_register( $wp_customize ) {
         'type'      => 'checkbox',
         'section'   => 'themizzerables_headers',
         'settings'  => 'show_page_headers'
+    ) ) );
+    $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'match_gigpress_widget_to_theme', array(
+        'label'     => __( 'Match GigPress Widget to Theme' ),
+        'type'      => 'checkbox',
+        'section'   => 'themizzerables_gigpress',
+        'settings'  => 'match_gigpress_widget_to_theme'
     ) ) );
 }
 add_action( 'customize_register', 'themizzerables_customize_register' );
