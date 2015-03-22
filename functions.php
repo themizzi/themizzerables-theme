@@ -160,10 +160,10 @@ function themizzerables_check_for_update( $transient ) {
         }
     }
 
-    $old_version = wp_get_theme( 'themizzerables-theme' )->get( 'Version' );
+    $old_version = wp_get_theme( 'themizzerables-theme-master' )->get( 'Version' );
     if ( THEMIZZERABLES_THEME_LATEST_VERSION > $old_version ) {
-        $transient->response['themizzerables-theme'] = [
-            'slug'          => 'themizzerables-theme',
+        $transient->response['themizzerables-theme-master'] = [
+            'slug'          => 'themizzerables-theme-master',
             'new_version'   => THEMIZZERABLES_THEME_LATEST_VERSION,
             'url'           => 'http://themizzerables.com',
             'package'       => 'https://github.com/themizzi/themizzerables-theme/archive/master.zip'
