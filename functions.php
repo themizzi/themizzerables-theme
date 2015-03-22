@@ -164,7 +164,6 @@ function themizzerables_check_for_update( $transient ) {
     if ( THEMIZZERABLES_THEME_LATEST_VERSION > $old_version ) {
         $transient->response['themizzerables-theme'] = [
             'slug'          => 'themizzerables-theme',
-            'destination'   => 'themizzerables-theme',
             'new_version'   => THEMIZZERABLES_THEME_LATEST_VERSION,
             'url'           => 'http://themizzerables.com',
             'package'       => 'https://github.com/themizzi/themizzerables-theme/archive/master.zip'
