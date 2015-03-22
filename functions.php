@@ -33,11 +33,11 @@ function themizzerables_enqueue_styles() {
     if ( (! is_admin() || isset($wp_customize ) ) &&
          true == get_theme_mod( 'add_additional_social_icons', true ) &&
          has_nav_menu( 'social' ) ) {
-        wp_enqueue_style( 'font-awesome',
-            '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' );
+        wp_enqueue_style( 'socicon',
+            get_stylesheet_directory_uri() . '/socicon/socicon.css' );
         wp_enqueue_style( 'themizzerables-social',
             get_stylesheet_directory_uri() . '/social.css', array(
-            'font-awesome' ) );
+            'socicon' ) );
     }
 }
 add_action( 'wp_enqueue_scripts', 'themizzerables_enqueue_styles' );

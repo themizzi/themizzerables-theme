@@ -1,9 +1,9 @@
 .social-navigation a[href*="soundcloud.com"]:before {
-    font-family: 'FontAwesome';
-    content:        "\f1be";
+    font-family: 'socicon';
+    content:        "n";
 }
 
 .social-navigation a[href*="spotify.com"]:before {
-    font-family: 'FontAwesome';
-    content:        "\f1bc";
+    font-family: 'socicon';
+    content:        "o";
 }
