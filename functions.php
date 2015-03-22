@@ -140,26 +140,35 @@ add_filter( 'get_the_archive_title', 'filter_category_archive_titles' );
  * @since 1.0
  */
 function themizzerables_check_for_update( $transient ) {
-    $result = wp_remote_get( 'https://raw.githubusercontent.com/themizzi/themizzerables-theme/master/style.css' );
-    $body = wp_remote_retrieve_body( $result );
-    if ( is_wp_error( $body ) || wp_remote_retrieve_response_code( $result ) != 200 ) {
-        return $transient;
-    }
-    $matches = array();
-    preg_match( '/Version:\s*(.*)/', $body, $matches );
-
-    if ( count( $matches ) > 1 ) {
-        $new_version = $matches[1];
-        $old_version = wp_get_theme( 'themizzerables-theme' )->get( 'Version' );
-        if ( $new_version != $old_version ) {
-            $transient->response['themizzerables-theme'] = [
-                'slug'          => 'themizzerables-theme',
-                'destination'   => 'themizzerables-theme',
-                'new_version'   => $new_version,
-                'url'           => 'http://themizzerables.com',
-                'package'       => 'https://github.com/themizzi/themizzerables-theme/archive/master.zip'
-            ];
+    if ( ! defined( 'THEMIZZERABLES_THEME_LATEST_VERSION' ) ) {
+        $result = wp_remote_get(
+            'https://raw.githubusercontent.com/themizzi/themizzerables-theme/master/style.css'
+        );
+        $body   = wp_remote_retrieve_body( $result );
+        if (is_wp_error( $body )
+            || wp_remote_retrieve_response_code( $result ) != 200
+        ) {
+            return $transient;
         }
+        $matches = array();
+        preg_match( '/Version:\s*(.*)/', $body, $matches );
+
+        if (count( $matches ) > 1) {
+            define( 'THEMIZZERABLES_THEME_LATEST_VERSION', $matches[1] );
+        } else {
+            return $transient;
+        }
+    }
+
+    $old_version = wp_get_theme( 'themizzerables-theme' )->get( 'Version' );
+    if ( THEMIZZERABLES_THEME_LATEST_VERSION > $old_version ) {
+        $transient->response['themizzerables-theme'] = [
+            'slug'          => 'themizzerables-theme',
+            'destination'   => 'themizzerables-theme',
+            'new_version'   => THEMIZZERABLES_THEME_LATEST_VERSION,
+            'url'           => 'http://themizzerables.com',
+            'package'       => 'https://github.com/themizzi/themizzerables-theme/archive/master.zip'
+        ];
     }
     return $transient;
 }
