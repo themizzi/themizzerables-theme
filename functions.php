@@ -30,6 +30,15 @@ function themizzerables_enqueue_styles() {
         $css = include plugin_dir_path( __FILE__ ) . 'gigpress.css.php';
         wp_add_inline_style( 'child-style', $css );
     }
+    if ( (! is_admin() || isset($wp_customize ) ) &&
+         true == get_theme_mod( 'add_additional_social_icons', true ) &&
+         has_nav_menu( 'social' ) ) {
+        wp_enqueue_style( 'font-awesome',
+            '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' );
+        wp_enqueue_style( 'themizzerables-social',
+            get_stylesheet_directory_uri() . '/social.css', array(
+            'font-awesome' ) );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'themizzerables_enqueue_styles' );
 
@@ -82,6 +91,9 @@ function themizzerables_customize_register( $wp_customize ) {
     $wp_customize->add_setting( 'match_gigpress_widget_to_theme', array(
         'default'   => true
     ) );
+    $wp_customize->add_setting( 'add_additional_social_icons', array(
+        'default'   => true
+    ) );
     $wp_customize->add_section( 'themizzerables_headers', array(
         'title'     => __( 'Headers', 'themizzerables' ),
         'priority'  => 30
@@ -116,8 +128,14 @@ function themizzerables_customize_register( $wp_customize ) {
         'section'   => 'themizzerables_gigpress',
         'settings'  => 'match_gigpress_widget_to_theme'
     ) ) );
+    $wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'add_additional_social_icons', array (
+        'label'     => __( 'Add Additional Social Icons' ),
+        'type'      => 'checkbox',
+        'section'   => 'nav',
+        'settings'  => 'add_additional_social_icons'
+    ) ) );
 }
-add_action( 'customize_register', 'themizzerables_customize_register' );
+add_action( 'customize_register', 'themizzerables_customize_register', 999 );
 
 /**
  * Filter the category title
@@ -162,7 +180,7 @@ function themizzerables_check_for_update( $transient ) {
 
     $old_version = wp_get_theme( 'themizzerables-theme-master' )->get( 'Version' );
     if ( THEMIZZERABLES_THEME_LATEST_VERSION > $old_version ) {
-        $transient->response['themizzerables-theme-master'] = [
+        $transient->response['themizzerables-theme'] = [
             'slug'          => 'themizzerables-theme-master',
             'new_version'   => THEMIZZERABLES_THEME_LATEST_VERSION,
             'url'           => 'http://themizzerables.com',
