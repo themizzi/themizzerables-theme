@@ -7,3 +7,8 @@
     font-family: 'socicon';
     content:        "o";
 }
+
+.social-navigation a[href*="reverbnation.com"]:before {
+    font-family: 'dashicons';
+    content: "\f155";
+}
