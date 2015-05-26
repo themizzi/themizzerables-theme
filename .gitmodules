@@ -1,0 +1,3 @@
+[submodule "socicon"]
+	path = socicon
+	url = https://github.com/rlinguri/socicon.git
